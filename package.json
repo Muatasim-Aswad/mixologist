@@ -1,0 +1,35 @@
+{
+  "name": "mixologist",
+  "version": "1.0.0",
+  "description": "Cocktail Recipe Finder Web App",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier -w": "prettier --write .",
+    "prettier -c": "prettier --check ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muatasim-Aswad/mixologist.git"
+  },
+  "keywords": [
+    "cocktail",
+    "web-app",
+    "api"
+  ],
+  "author": "Muatasim-Aswad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Muatasim-Aswad/mixologist/issues"
+  },
+  "homepage": "https://github.com/Muatasim-Aswad/mixologist#readme",
+  "dependencies": {
+    "prettier": "^3.3.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "eslint": "^9.10.0",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.5.0"
+  }
+}
