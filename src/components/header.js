@@ -7,8 +7,10 @@ export function addHeader() {
   const header = createHeaderView();
 
   header.querySelector('#search-button').addEventListener('click', () => {
-    const searchInput = header.querySelector('#search-bar').value;
+    const searchBar = header.querySelector('#search-bar');
+    const searchInput = searchBar.value;
     if (searchInput) search(searchInput);
+    searchBar.value = '';
   });
 
   const headerContainer = document.querySelector('header');
@@ -16,10 +18,26 @@ export function addHeader() {
 }
 
 async function search(searchInput) {
-  searchInput = searchInput.trimStart().toLowerCase();
-  const url = `${COCKTAIL_DB_URL.search.byName}${searchInput}`;
+  try {
+    setState({ loading: true });
+    await wait(5); //to be removed
 
-  const data = await fetchData(url);
-  setState({ cocktail: data.drinks[0] });
-  console.log(data);
+    searchInput = searchInput.trimStart().toLowerCase();
+    const url = `${COCKTAIL_DB_URL.search.byName}${searchInput}`;
+    const data = await fetchData(url);
+
+    if (!data.drinks || data.drinks.length === 0)
+      throw new Error('Empty response');
+
+    setState({ cocktail: data.drinks[0] });
+    console.log(data);
+    setState({ loading: false });
+  } catch (error) {
+    console.error(error);
+    setState({ error: error.message });
+  }
+}
+
+function wait(s) {
+  return new Promise((resolve) => setTimeout(resolve, s * 1000));
 }

@@ -2,17 +2,17 @@ import { createCocktailView } from '../views/cocktailViews/cocktailView.js';
 import { state } from '../app.js';
 import { createIngredientView } from '../views/cocktailViews/ingredientView.js';
 
-export function cocktail() {
+export function createCocktailPage() {
   const cocktail = processCocktailData(state.cocktail);
 
-  const cocktailElement = createCocktailView(cocktail);
+  const cocktailPage = createCocktailView(cocktail);
 
-  const ingredientsList = cocktailElement.querySelector('.ingredients ul');
+  const ingredientsList = cocktailPage.querySelector('.ingredients ul');
   cocktail.ingredients.forEach((ingredient) => {
     ingredientsList.appendChild(createIngredientView(ingredient));
   });
 
-  return cocktailElement;
+  return cocktailPage;
 }
 
 function processCocktailData(fetched) {
@@ -22,7 +22,7 @@ function processCocktailData(fetched) {
     image: fetched.strDrinkThumb,
     ingredients: [],
     glass: fetched.strGlass,
-    instructions: fetched.strInstructions,
+    instructions: fetched.strInstructions.split('.').join('.<br>'),
     category: fetched.strCategory,
     alcoholic: fetched.strAlcoholic,
   };

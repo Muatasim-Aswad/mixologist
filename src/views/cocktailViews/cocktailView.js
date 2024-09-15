@@ -4,21 +4,17 @@ export function createCocktailView(cocktail) {
 
   cocktailElement.innerHTML = String.raw`
         <h2>${cocktail.name}</h2>
-        <div class="ingredients">
-            <h3>Ingredients:</h3><ul></ul>
+        <div class="tags"> 
+          <p>${cocktail.glass}</p>
+          <p>${cocktail.alcoholic}</p>
+          <p>${cocktail.category}</p>
         </div>
-        <div class="glass">
-            <h3>Glass:</h3><p>${cocktail.glass}</p>
+        <div class="ingredients">
+            <ul></ul>
         </div>
         <div class="instructions">
-            <h3>Instructions:</h3><p>${cocktail.instructions}</p>
+            <p>${cocktail.instructions}</p>
         </div>               
-        <div class="category">
-            <h3>Category:</h3><p>${cocktail.category}</p>
-        </div>
-        <div class="alcoholic">
-            <h3>Alcoholic:</h3><p>${cocktail.alcoholic}</p>
-        </div>
         <img src="${cocktail.image}" alt="${cocktail.name}" />
   `;
 

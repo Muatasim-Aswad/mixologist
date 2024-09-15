@@ -1,5 +1,5 @@
 import { createWelcomeView } from '../views/welcomeView.js';
 
-export function welcome() {
+export function createWelcomePage() {
   return createWelcomeView();
 }

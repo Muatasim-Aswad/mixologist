@@ -5,6 +5,8 @@ const states = [];
 export let state = {
   currentPage: null,
   cocktail: null,
+  error: null,
+  loading: false,
 };
 
 const loadApp = () => {
@@ -40,6 +42,8 @@ export function setState(newStateChanges) {
   //auto set currentPage based on the changed
   if (!newStateChanges.currentPage) {
     if (newStateChanges.cocktail) newStateChanges.currentPage = 'cocktail';
+    if (newStateChanges.error) newStateChanges.currentPage = 'error';
+    if (newStateChanges.loading) newStateChanges.currentPage = 'loading';
   }
 
   //assign the new state
@@ -55,7 +59,8 @@ function render() {
 
   if (
     oldState.currentPage !== state.currentPage ||
-    oldState.cocktail !== state.cocktail
+    oldState.cocktail !== state.cocktail ||
+    oldState.error !== state.error
   ) {
     const main = document.querySelector('main');
     main.innerHTML = '';
