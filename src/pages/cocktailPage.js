@@ -31,8 +31,8 @@ function processCocktailData(fetched) {
   while (true) {
     if (fetched[`strIngredient${i}`]) {
       cocktail.ingredients.push({
-        name: fetched[`strIngredient${i}`],
-        measure: fetched[`strMeasure${i}`],
+        name: fetched[`strIngredient${i}`] || '',
+        measure: fetched[`strMeasure${i}`] || '',
         image: `https://www.thecocktaildb.com/images/ingredients/${fetched[`strIngredient${i}`]}-Small.png`,
       });
 

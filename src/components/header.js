@@ -6,12 +6,20 @@ import { setState } from '../app.js';
 export function addHeader() {
   const header = createHeaderView();
 
-  header.querySelector('#search-button').addEventListener('click', () => {
+  header
+    .querySelector('#search-button')
+    .addEventListener('click', handleSearch);
+
+  header.querySelector('#search-bar').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') handleSearch();
+  });
+
+  function handleSearch() {
     const searchBar = header.querySelector('#search-bar');
     const searchInput = searchBar.value;
     if (searchInput) search(searchInput);
     searchBar.value = '';
-  });
+  }
 
   const headerContainer = document.querySelector('header');
   headerContainer.appendChild(header);
@@ -20,7 +28,7 @@ export function addHeader() {
 async function search(searchInput) {
   try {
     setState({ loading: true });
-    await wait(5); //to be removed
+    await wait(2); //to be removed
 
     searchInput = searchInput.trimStart().toLowerCase();
     const url = `${COCKTAIL_DB_URL.search.byName}${searchInput}`;
