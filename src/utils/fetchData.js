@@ -1,7 +1,7 @@
 import { apiCache } from '../data.js';
 
-export async function fetchData(url) {
-  if (apiCache.has(url)) {
+export async function fetchData(url, cache = true) {
+  if (cache && apiCache.has(url)) {
     return apiCache.get(url);
   }
 

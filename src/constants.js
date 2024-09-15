@@ -14,7 +14,7 @@ export const COCKTAIL_DB_URL = Object.freeze({
     };
   },
   get random() {
-    return { random: `${this.base}random.php` };
+    return `${this.base}random.php`;
   },
   get filter() {
     return {

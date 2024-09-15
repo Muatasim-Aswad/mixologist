@@ -17,7 +17,7 @@ export function addHeader() {
   function handleSearch() {
     const searchBar = header.querySelector('#search-bar');
     const searchInput = searchBar.value;
-    if (searchInput) search(searchInput);
+    search(searchInput);
     searchBar.value = '';
   }
 
@@ -31,9 +31,13 @@ async function search(searchInput) {
     await wait(2); //to be removed
 
     searchInput = searchInput.trimStart().toLowerCase();
-    const url = `${COCKTAIL_DB_URL.search.byName}${searchInput}`;
-    const data = await fetchData(url);
-
+    const url = searchInput
+      ? `${COCKTAIL_DB_URL.search.byName}${searchInput}`
+      : COCKTAIL_DB_URL.random;
+    const cache = searchInput ? true : false;
+    console.log(url);
+    const data = await fetchData(url, cache);
+    console.log(data);
     if (!data.drinks || data.drinks.length === 0)
       throw new Error('Empty response');
 
