@@ -7,15 +7,18 @@ export const COCKTAIL_DB_URL = Object.freeze({
       byIngredient: `${this.base}search.php?i=`,
     };
   },
+
   get lookup() {
     return {
       cocktailById: `${this.base}lookup.php?i=`,
       ingredientById: `${this.base}lookup.php?iid=`,
     };
   },
+
   get random() {
     return `${this.base}random.php`;
   },
+
   get filter() {
     return {
       byIngredient: `${this.base}filter.php?i=`,
@@ -24,6 +27,7 @@ export const COCKTAIL_DB_URL = Object.freeze({
       byGlass: `${this.base}filter.php?g=`,
     };
   },
+
   get list() {
     return {
       categories: `${this.base}list.php?c=list`,

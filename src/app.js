@@ -1,4 +1,4 @@
-import { addHeader } from './components/header.js';
+import { createHeaderComponent } from './components/header.js';
 import { pages } from './pages/index.js';
 
 const states = [];
@@ -10,7 +10,8 @@ export let state = {
 };
 
 const loadApp = () => {
-  addHeader();
+  document.querySelector('header').appendChild(createHeaderComponent());
+
   setState({ currentPage: 'welcome' });
 };
 
@@ -39,33 +40,31 @@ window.addEventListener('load', loadApp);
  *
  */
 export function setState(newStateChanges) {
-  //auto set currentPage based on the changed
+  //auto set currentPage based on the changes
   if (!newStateChanges.currentPage) {
-    if (newStateChanges.cocktail) newStateChanges.currentPage = 'cocktail';
-    if (newStateChanges.error) newStateChanges.currentPage = 'error';
-    if (newStateChanges.loading) newStateChanges.currentPage = 'loading';
+    const { loading, cocktail, error } = newStateChanges;
+
+    newStateChanges.currentPage = cocktail
+      ? 'cocktail'
+      : error
+        ? 'error'
+        : loading
+          ? 'loading'
+          : null;
   }
 
   //assign the new state
   states[0] = state; //can be push if state history is needed
   state = { ...state, ...newStateChanges };
 
-  //apply the new state
-  render();
+  //render page if new currentPage is assigned
+  if (newStateChanges.currentPage) renderPage();
 }
 
-function render() {
-  const oldState = states[states.length - 1];
+function renderPage() {
+  const main = document.querySelector('main');
+  main.innerHTML = '';
 
-  if (
-    oldState.currentPage !== state.currentPage ||
-    oldState.cocktail !== state.cocktail ||
-    oldState.error !== state.error
-  ) {
-    const main = document.querySelector('main');
-    main.innerHTML = '';
-
-    const page = pages[state.currentPage]();
-    main.appendChild(page);
-  }
+  const page = pages[state.currentPage]();
+  main.appendChild(page);
 }

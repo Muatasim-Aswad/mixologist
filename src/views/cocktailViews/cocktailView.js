@@ -3,7 +3,10 @@ export function createCocktailView(cocktail) {
   cocktailElement.classList.add('cocktail');
 
   cocktailElement.innerHTML = String.raw`
-        <h2>${cocktail.name}</h2>
+        <div class = "cocktail-header">
+          <h2>${cocktail.name}</h2>
+          <button class="favorite-btn" title= 'Add to favorites'>❤</button>
+        </div>
         <div class="tags"> 
           <p>${cocktail.glass}</p>
           <p>${cocktail.alcoholic}</p>

@@ -1,9 +1,10 @@
 import { createCocktailView } from '../views/cocktailViews/cocktailView.js';
 import { state } from '../app.js';
 import { createIngredientView } from '../views/cocktailViews/ingredientView.js';
+import { favorites } from '../data.js';
 
 export function createCocktailPage() {
-  const cocktail = processCocktailData(state.cocktail);
+  const cocktail = state.cocktail;
 
   const cocktailPage = createCocktailView(cocktail);
 
@@ -12,36 +13,16 @@ export function createCocktailPage() {
     ingredientsList.appendChild(createIngredientView(ingredient));
   });
 
+  const favoriteBtn = cocktailPage.querySelector('.favorite-btn');
+  if (cocktail.favorite) favoriteBtn.classList.add('favorite');
+
+  favoriteBtn.addEventListener('click', () => {
+    favoriteBtn.classList.toggle('favorite');
+
+    state.cocktail.favorite = !state.cocktail.favorite;
+
+    favorites.update();
+  });
+
   return cocktailPage;
-}
-
-function processCocktailData(fetched) {
-  const cocktail = {
-    id: fetched.idDrink,
-    name: fetched.strDrink,
-    image: fetched.strDrinkThumb,
-    ingredients: [],
-    glass: fetched.strGlass,
-    instructions: fetched.strInstructions.split('.').join('.<br>'),
-    category: fetched.strCategory,
-    alcoholic: fetched.strAlcoholic,
-  };
-
-  let i = 1;
-  while (true) {
-    if (fetched[`strIngredient${i}`]) {
-      cocktail.ingredients.push({
-        name: fetched[`strIngredient${i}`] || '',
-        measure: fetched[`strMeasure${i}`] || '',
-        image: `https://www.thecocktaildb.com/images/ingredients/${fetched[`strIngredient${i}`]}-Small.png`,
-      });
-
-      i++;
-    } else {
-      break;
-    }
-  }
-
-  console.log(cocktail);
-  return cocktail;
 }

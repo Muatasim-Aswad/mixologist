@@ -24,11 +24,12 @@ ul {
   display: flex;
   flex-wrap: wrap;
   padding: 0;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 li {
   display: flex;
+  margin-right: 1rem;
 }
 
 li p {
@@ -87,4 +88,31 @@ li p {
 }
 .search-bar button:hover {
   background-color: #d0d0d0;
+}
+
+.cocktail-header {
+  display: flex;
+  align-items: center;
+}
+
+.favorite-btn {
+  padding: 0;
+  background-color: #fff;
+  height: max-content;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  color: #d0d0d0;
+}
+
+.favorite-btn:hover {
+  color: #f00;
+}
+.favorite-btn.favorite {
+  color: #f00;
+}
+.favorite-btn.favorite:hover {
+  color: #d0d0d0;
 }
