@@ -1,10 +1,11 @@
-import { state } from './app.js';
+import { state } from "./state.js";
 
 export const apiCache = new Map(); //cache api results to avoid repetitive fetches
 
 //to store the favorites cocktails in the local storage
 export const favorites = {
   _favoritesArray: [],
+  _subscribers: [],
 
   update() {
     if (state.cocktail.favorite) {
@@ -12,6 +13,8 @@ export const favorites = {
     } else {
       favorites.remove(state.cocktail);
     }
+
+    this._subscribers.forEach((callback) => callback());
   },
 
   set(cocktail) {
@@ -39,11 +42,16 @@ export const favorites = {
   },
 
   getLocalStorage() {
-    this._favoritesArray = JSON.parse(localStorage.getItem('favorites')) || [];
+    this._favoritesArray = JSON.parse(localStorage.getItem("favorites")) || [];
     return this._favoritesArray;
   },
 
   setLocalStorage() {
-    localStorage.setItem('favorites', JSON.stringify(this._favoritesArray));
+    localStorage.setItem("favorites", JSON.stringify(this._favoritesArray));
+  },
+
+  //add a subscriber method
+  subscribe(callback) {
+    this._subscribers.push(callback);
   },
 };

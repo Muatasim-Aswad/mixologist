@@ -1,70 +1,51 @@
-import { createHeaderComponent } from './components/header.js';
-import { pages } from './pages/index.js';
+import { createHeaderComponent } from "./components/header.js";
+import { createStore } from "./store.js";
+import { navigateTo } from "./routing.js";
+import { favorites } from "./data.js";
 
-const states = [];
-export let state = {
+const initialState = {
   currentPage: null,
-  cocktail: null,
+  url: null,
   error: null,
   loading: false,
+  cocktail: null,
+  cocktails: null,
+  favorites: null,
 };
+export const { setState, getState, subscribe } = createStore(initialState);
 
 const loadApp = () => {
-  document.querySelector('header').appendChild(createHeaderComponent());
+  document.querySelector("header").appendChild(createHeaderComponent());
 
-  setState({ currentPage: 'welcome' });
+  subscribe(currentPageSelector, renderPage);
+  subscribe(urlSelector, navigateTo); //sth wrong here
+
+  setState({ favorites: favorites.getLocalStorage() });
+  subscribe(favoritesSelector, favorites.update);
+
+  setState({ url: "/mixologist" });
+  navigateTo();
 };
 
-window.addEventListener('load', loadApp);
+window.addEventListener("load", loadApp);
+window.addEventListener("popstate", setState());
+window.addEventListener("DOMContentLoaded", navigateTo);
 
-/**
- * @param {Partial<state>} newStateChanges - An object containing the state changes to be applied.
- * The currentPage changes automatically if there is an indication of a new page in the changed states.
- * e.g. { loading: true } will set the loading state to true and the currentPage to 'loading'.
- *
- * @example
- * // Example usage:
- * setState({ loading: true });
- *
- * @example
- * // Complete state structure:
- * interface State {
- *   currentPage: 'welcome' | 'cocktail' | 'ingredient' | 'cocktails' | 'error',
- *   searchBarActive: boolean, //default: false
- *   loading: boolean, //default: false
- *   cocktail: {} | null,
- *   ingredient: {} | null,
- *   cocktails: {}[] | null,
- *   error: string | null,
- * };
- *
- */
-export function setState(newStateChanges) {
-  //auto set currentPage based on the changes
-  if (!newStateChanges.currentPage) {
-    const { loading, cocktail, error } = newStateChanges;
-
-    newStateChanges.currentPage = cocktail
-      ? 'cocktail'
-      : error
-        ? 'error'
-        : loading
-          ? 'loading'
-          : null;
-  }
-
-  //assign the new state
-  states[0] = state; //can be push if state history is needed
-  state = { ...state, ...newStateChanges };
-
-  //render page if new currentPage is assigned
-  if (newStateChanges.currentPage) renderPage();
+function currentPageSelector(state) {
+  return state.currentPage;
 }
 
-function renderPage() {
-  const main = document.querySelector('main');
-  main.innerHTML = '';
+function urlSelector(state) {
+  return state.url;
+}
 
-  const page = pages[state.currentPage]();
+function favoritesSelector(state) {
+  return state.favorites;
+}
+
+function renderPage(page) {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+
   main.appendChild(page);
 }
