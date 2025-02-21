@@ -2,7 +2,7 @@ import { favorites } from "./data.js";
 import { pages } from "./pages/index.js";
 
 const states = [];
-export let state = {
+let state = {
   currentPage: null,
   cocktail: null,
   cocktails: null,
@@ -34,7 +34,7 @@ export let state = {
  * };
  *
  */
-export function setState(newStateChanges) {
+function setState(newStateChanges) {
   //auto set currentPage based on the changes
   if (!newStateChanges.currentPage) {
     const { loading, cocktail, cocktails, error } = newStateChanges;

@@ -1,9 +1,9 @@
 import { createCocktailView } from "../views/cocktailView/cocktailView.js";
-import { state } from "../state.js";
 import { createIngredientView } from "../views/cocktailView/ingredientView.js";
+import { cocktailSelector } from "../selectors.js";
 
 export function createCocktailPage() {
-  const cocktail = state.cocktail;
+  const cocktail = cocktailSelector();
   const cocktailPage = createCocktailView(cocktail);
 
   // Get the ingredients list and populate it

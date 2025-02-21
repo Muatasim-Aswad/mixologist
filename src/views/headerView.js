@@ -1,5 +1,7 @@
 import { favorites } from "../data.js"; // favorites.getLocalStorage().length
-import { setState } from "../state.js"; // setState({ cocktails: favorites.getLocalStorage() })
+import { setState } from "../app.js";
+import { favoritesSelector } from "../selectors.js";
+import { subscribe } from "../app.js";
 
 export function createHeaderView() {
   const header = document.createElement("div");
@@ -56,7 +58,7 @@ export function createHeaderView() {
   function updateFavoritesIcon() {
     const icon = header.querySelector("#favorites-icon svg");
     const count = header.querySelector("#favorites-count");
-    const favCount = favorites.getLocalStorage().length;
+    const favCount = favoritesSelector().length;
 
     if (favCount > 0) {
       icon.classList.replace("text-gray-500", "text-red-500");
@@ -70,12 +72,15 @@ export function createHeaderView() {
 
   // Update favorites when clicked
   header.querySelector("#favorites-icon").addEventListener("click", () => {
-    setState({ cocktails: favorites.getLocalStorage() });
+    setState({
+      cocktails: favorites.getLocalStorage(),
+      currentPage: "cocktails",
+    });
     console.log("Favorites updated in state:", favorites.getLocalStorage());
   });
 
   // Subscribe to favorites updates
-  favorites.subscribe(updateFavoritesIcon);
+  subscribe(favoritesSelector, updateFavoritesIcon);
 
   return header;
 }

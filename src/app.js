@@ -1,7 +1,13 @@
 import { createHeaderComponent } from "./components/header.js";
+import { pages } from "./pages/index.js";
 import { createStore } from "./store.js";
 import { navigateTo } from "./routing.js";
 import { favorites } from "./data.js";
+import {
+  currentPageSelector,
+  urlSelector,
+  favoritesSelector,
+} from "./selectors.js";
 
 const initialState = {
   currentPage: null,
@@ -10,42 +16,35 @@ const initialState = {
   loading: false,
   cocktail: null,
   cocktails: null,
-  favorites: null,
+  favorites: favorites.getLocalStorage(),
 };
 export const { setState, getState, subscribe } = createStore(initialState);
 
-const loadApp = () => {
-  document.querySelector("header").appendChild(createHeaderComponent());
-
-  subscribe(currentPageSelector, renderPage);
-  subscribe(urlSelector, navigateTo); //sth wrong here
-
-  setState({ favorites: favorites.getLocalStorage() });
-  subscribe(favoritesSelector, favorites.update);
-
-  setState({ url: "/mixologist" });
-  navigateTo();
-};
+subscribe(currentPageSelector, renderPage);
+subscribe(urlSelector, navigateTo);
+subscribe(favoritesSelector, () => favorites.update());
 
 window.addEventListener("load", loadApp);
-window.addEventListener("popstate", setState());
-window.addEventListener("DOMContentLoaded", navigateTo);
+window.addEventListener("popstate", (e) => {
+  e.preventDefault();
+  const path = window.location.pathname;
+  const query = window.location.search;
+  const hash = window.location.hash;
 
-function currentPageSelector(state) {
-  return state.currentPage;
+  setState({ url: path + query + hash });
+});
+
+function loadApp() {
+  document.querySelector("header").appendChild(createHeaderComponent());
+
+  setState({ url: "/mixologist" });
 }
 
-function urlSelector(state) {
-  return state.url;
-}
-
-function favoritesSelector(state) {
-  return state.favorites;
-}
-
-function renderPage(page) {
+function renderPage() {
   const main = document.querySelector("main");
   main.innerHTML = "";
 
+  console.log("getState().currentPage");
+  const page = pages[getState().currentPage]();
   main.appendChild(page);
 }

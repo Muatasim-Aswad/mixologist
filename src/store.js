@@ -3,22 +3,55 @@ export function createStore(initialState = {}) {
   let listeners = [];
   let history = [initialState]; // Stores all previous states
 
+  // Deep compare state by keys
+  const hasStateChanged = (prevState, newState, selector) => {
+    const selectedPrevState = selector(prevState);
+    const selectedNewState = selector(newState);
+
+    if (
+      typeof selectedPrevState !== "object" ||
+      typeof selectedNewState !== "object"
+    ) {
+      return selectedPrevState !== selectedNewState;
+    }
+
+    //null and undefined
+
+    if (selectedPrevState === null || selectedNewState === null) {
+      return selectedPrevState !== selectedNewState;
+    }
+
+    if (selectedPrevState === undefined || selectedNewState === undefined) {
+      return selectedPrevState !== selectedNewState;
+    }
+
+    const keys = new Set([
+      ...Object.keys(selectedPrevState),
+      ...Object.keys(selectedNewState),
+    ]);
+    for (const key of keys) {
+      if (selectedPrevState[key] !== selectedNewState[key]) return true;
+    }
+    return false;
+  };
+
   return {
     getState() {
       return state;
     },
 
     setState(newState) {
+      console.log("newState", newState);
       const prevState = { ...state };
       state = { ...state, ...newState };
 
       // Notify only relevant subscribers
       listeners.forEach(({ selector, callback }) => {
-        if (this.hasStateChanged(prevState, state, selector)) {
+        if (hasStateChanged(prevState, state, selector)) {
           callback(selector(state));
         }
       });
-
+      console.log("state", state);
       history.push(state);
     },
 
@@ -30,28 +63,6 @@ export function createStore(initialState = {}) {
       return () => {
         listeners = listeners.filter((l) => l !== listener);
       };
-    },
-
-    // Deep compare state by keys
-    hasStateChanged(prevState, newState, selector) {
-      const selectedPrevState = selector(prevState);
-      const selectedNewState = selector(newState);
-
-      if (
-        typeof selectedPrevState !== "object" ||
-        typeof selectedNewState !== "object"
-      ) {
-        return selectedPrevState !== selectedNewState;
-      }
-
-      const keys = new Set([
-        ...Object.keys(selectedPrevState),
-        ...Object.keys(selectedNewState),
-      ]);
-      for (const key of keys) {
-        if (selectedPrevState[key] !== selectedNewState[key]) return true;
-      }
-      return false;
     },
 
     // Undo: Move back in history

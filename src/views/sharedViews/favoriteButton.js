@@ -1,5 +1,6 @@
-import { favorites } from "../../data.js";
-import { state } from "../../state.js";
+import { favoritesSelector } from "../../selectors.js";
+import { cocktailSelector } from "../../selectors.js";
+import { setState } from "../../app.js";
 
 export function createFavoriteButton(favorite) {
   const button = document.createElement("button");
@@ -27,8 +28,20 @@ export function createFavoriteButton(favorite) {
 
     button.innerHTML = button.innerHTML; // Re-render SVG to update color
 
-    state.cocktail.favorite = !state.cocktail.favorite;
-    favorites.update();
+    const cocktail = { ...cocktailSelector() }; //object
+    let favorites = [...favoritesSelector()]; //array
+
+    if (favorites.some((favorite) => favorite.id === cocktail.id)) {
+      favorites = favorites.filter((favorite) => favorite.id !== cocktail.id);
+      console.log("favorites.filter");
+    } else {
+      favorites.push(cocktail);
+      console.log("favorites.push");
+    }
+
+    cocktail.favorite = !cocktail.favorite;
+
+    setState({ favorites, cocktail });
   });
 
   return button;

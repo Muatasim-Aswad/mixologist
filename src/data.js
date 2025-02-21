@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { cocktailSelector } from "./selectors.js";
 
 export const apiCache = new Map(); //cache api results to avoid repetitive fetches
 
@@ -8,20 +8,24 @@ export const favorites = {
   _subscribers: [],
 
   update() {
-    if (state.cocktail.favorite) {
-      favorites.set(state.cocktail);
+    console.log(cocktailSelector().favorite);
+    if (cocktailSelector().favorite) {
+      favorites.set(cocktailSelector());
+      console.log("favorites.set");
     } else {
-      favorites.remove(state.cocktail);
+      favorites.remove(cocktailSelector());
     }
+
+    console.log("favorites.update", this._favoritesArray);
+    console.log("cocktailSelector()", cocktailSelector());
+    console.log("localStorage", this.getLocalStorage());
 
     this._subscribers.forEach((callback) => callback());
   },
 
   set(cocktail) {
     if (this.has(cocktail)) return;
-
-    this._favoritesArray.push(cocktail);
-
+    this._favoritesArray.push(cocktail); // Add the cocktail to the array
     this.setLocalStorage();
   },
 
@@ -35,10 +39,10 @@ export const favorites = {
     this.setLocalStorage();
   },
 
-  has(cocktailID) {
+  has(cocktail) {
     this.getLocalStorage();
 
-    return this._favoritesArray.some((favorite) => favorite.id === cocktailID);
+    return this._favoritesArray.some((favorite) => favorite.id === cocktail.id);
   },
 
   getLocalStorage() {

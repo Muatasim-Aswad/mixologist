@@ -1,4 +1,5 @@
 import { createFavoriteButton } from "../sharedViews/favoriteButton.js";
+import { favoritesSelector } from "../../selectors.js";
 
 export function createCocktailCardView(cocktail) {
   const card = document.createElement("div");
@@ -35,6 +36,9 @@ export function createCocktailCardView(cocktail) {
   `;
 
   // Insert the favorite button
+  if (favoritesSelector().some((favorite) => favorite.id === cocktail.id)) {
+    cocktail.favorite = true;
+  }
   const favoriteButton = createFavoriteButton(cocktail.favorite);
   favoriteButton.classList.add("relative", "z-20"); // Ensure it's above the overlay
   card.querySelector(".favorite-button-container").appendChild(favoriteButton);
