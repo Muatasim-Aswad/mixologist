@@ -51,7 +51,7 @@ export function createCocktailView(cocktail) {
     </div>`;
 
   // Insert the favorite button
-  const favoriteButton = createFavoriteButton(cocktail.favorite);
+  const favoriteButton = createFavoriteButton(cocktail);
   cocktailElement
     .querySelector(".favorite-button-container")
     .appendChild(favoriteButton);

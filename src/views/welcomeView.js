@@ -31,7 +31,7 @@ export function createWelcomeView() {
     <div class="mt-6">
       <h4 class="text-xl font-semibold text-gray-800 mb-2">Feeling Adventurous?</h4>
       <p class="text-gray-600">
-        Click the search button without typing anything to get a 
+        Click the random button above without typing anything to get a 
         <strong class="text-green-600">random cocktail</strong> recipe and surprise yourself!
       </p>
     </div>

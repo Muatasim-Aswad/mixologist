@@ -1,4 +1,4 @@
-import { apiCache } from '../data.js';
+const apiCache = new Map(); //cache api results to avoid repetitive fetches
 
 export async function fetchData(url, cache = true) {
   if (cache && apiCache.has(url)) {

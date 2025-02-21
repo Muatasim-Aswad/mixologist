@@ -1,9 +1,6 @@
-import { favorites } from "../data.js";
-
 export function processCocktailData(raw) {
   const cocktail = {
     processed: true,
-    favorite: favorites.has(raw.idDrink),
     id: raw.idDrink,
     name: raw.strDrink,
     image: raw.strDrinkThumb,

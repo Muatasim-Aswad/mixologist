@@ -1,16 +1,20 @@
-import { favoritesSelector } from "../../selectors.js";
-import { cocktailSelector } from "../../selectors.js";
-import { setState } from "../../app.js";
+import {
+  hasFavorite,
+  addFavorite,
+  removeFavorite,
+} from "../../models/favorites.js";
 
-export function createFavoriteButton(favorite) {
+export function createFavoriteButton(cocktail) {
+  const isFavorite = hasFavorite(cocktail);
   const button = document.createElement("button");
   button.classList.add(
     "favorite-btn",
     "text-2xl",
     "md:text-3xl",
-    "transition-colors",
-    favorite ? "text-red-500" : "text-gray-500", // Initial state
-    favorite ? "hover:text-gray-500" : "hover:text-red-500",
+    isFavorite ? "text-red-500" : "text-gray-500", // Initial state
+    "transition-all",
+    "duration-300",
+    "hover:scale-110",
   );
 
   button.innerHTML = String.raw`
@@ -19,29 +23,17 @@ export function createFavoriteButton(favorite) {
     </svg>
   `;
 
-  // Handle favorite button click
+  // Click handler
   button.addEventListener("click", () => {
-    button.classList.toggle("hover:text-red-500");
-    button.classList.toggle("hover:text-gray-500");
-    button.classList.toggle("text-red-500");
-    button.classList.toggle("text-gray-500");
-
-    button.innerHTML = button.innerHTML; // Re-render SVG to update color
-
-    const cocktail = { ...cocktailSelector() }; //object
-    let favorites = [...favoritesSelector()]; //array
-
-    if (favorites.some((favorite) => favorite.id === cocktail.id)) {
-      favorites = favorites.filter((favorite) => favorite.id !== cocktail.id);
-      console.log("favorites.filter");
+    if (isFavorite) {
+      removeFavorite(cocktail);
+      button.classList.remove("text-red-500");
+      button.classList.add("text-gray-500");
     } else {
-      favorites.push(cocktail);
-      console.log("favorites.push");
+      addFavorite(cocktail);
+      button.classList.remove("text-gray-500");
+      button.classList.add("text-red-500");
     }
-
-    cocktail.favorite = !cocktail.favorite;
-
-    setState({ favorites, cocktail });
   });
 
   return button;

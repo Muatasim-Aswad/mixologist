@@ -6,8 +6,7 @@ import { processCocktailData } from "./processCocktailData.js";
 export async function search(searchInput, byId = false, updateUrl = true) {
   try {
     setState({ loading: true, currentPage: "loading" });
-    //set state url
-    await wait(1.5); //to simulate slow search
+    if (Math.random() > 0.5) await wait(1.5); //to simulate slow search
 
     searchInput = searchInput.trimStart().toLowerCase();
     let url = searchInput //if no query get a random one
@@ -31,16 +30,22 @@ export async function search(searchInput, byId = false, updateUrl = true) {
       } else if (searchInput) {
         url = `/cocktails?search=${searchInput}`;
       } else {
-        url = "/cocktails";
+        url = "/cocktails/random";
       }
-
-      window.history.pushState({}, "", url);
     }
+
     const newState = {
       cocktails: cocktails,
       loading: false,
       currentPage: "cocktails",
+      url,
     };
+
+    if (byId) {
+      newState.cocktail = cocktails[0];
+      newState.currentPage = "cocktail";
+    }
+
     setState(newState);
   } catch (error) {
     console.error(error);

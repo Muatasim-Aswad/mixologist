@@ -1,39 +1,10 @@
+import isEqual from "./utils/isEqual.js";
+const HISTORY_LIMIT = 49;
+
 export function createStore(initialState = {}) {
   let state = initialState;
   let listeners = [];
   let history = [initialState]; // Stores all previous states
-
-  // Deep compare state by keys
-  const hasStateChanged = (prevState, newState, selector) => {
-    const selectedPrevState = selector(prevState);
-    const selectedNewState = selector(newState);
-
-    if (
-      typeof selectedPrevState !== "object" ||
-      typeof selectedNewState !== "object"
-    ) {
-      return selectedPrevState !== selectedNewState;
-    }
-
-    //null and undefined
-
-    if (selectedPrevState === null || selectedNewState === null) {
-      return selectedPrevState !== selectedNewState;
-    }
-
-    if (selectedPrevState === undefined || selectedNewState === undefined) {
-      return selectedPrevState !== selectedNewState;
-    }
-
-    const keys = new Set([
-      ...Object.keys(selectedPrevState),
-      ...Object.keys(selectedNewState),
-    ]);
-    for (const key of keys) {
-      if (selectedPrevState[key] !== selectedNewState[key]) return true;
-    }
-    return false;
-  };
 
   return {
     getState() {
@@ -41,8 +12,13 @@ export function createStore(initialState = {}) {
     },
 
     setState(newState) {
-      console.log("newState", newState);
+      if (isEqual(newState, state, true)) return; //3rd arg states newState can be just a subset of the state
+
       const prevState = { ...state };
+      if (typeof newState === "function") {
+        newState = newState(prevState);
+      }
+
       state = { ...state, ...newState };
 
       // Notify only relevant subscribers
@@ -51,8 +27,11 @@ export function createStore(initialState = {}) {
           callback(selector(state));
         }
       });
-      console.log("state", state);
+
+      if (history.length > HISTORY_LIMIT) history.shift();
       history.push(state);
+
+      //console.log(history);
     },
 
     // Subscribe to changes of a specific part of the state
@@ -69,4 +48,12 @@ export function createStore(initialState = {}) {
     // Redo: Move forward in history
     // Get full history (for debugging)
   };
+}
+
+// Deep compare state by keys
+function hasStateChanged(prevState, newState, selector) {
+  const selectedPrevState = selector(prevState);
+  const selectedNewState = selector(newState);
+
+  return !isEqual(selectedPrevState, selectedNewState);
 }

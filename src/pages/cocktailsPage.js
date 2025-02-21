@@ -12,7 +12,11 @@ export function createCocktailsPage() {
     card.addEventListener("click", () => {
       const cocktailId = card.dataset.id;
       const cocktail = cocktails.find((cocktail) => cocktail.id === cocktailId);
-      setState({ cocktail: cocktail, currentPage: "cocktail" });
+      setState({
+        cocktail: cocktail,
+        currentPage: "cocktail",
+        url: `/cocktails/${cocktailId}`,
+      });
     });
   });
 
