@@ -1,3 +1,4 @@
+import "./style.css";
 import { createHeaderComponent } from "./components/header/header.js";
 import { createStore } from "./State/store.js";
 import { navigateTo } from "./RoutingRendering/navigateTo.js";
