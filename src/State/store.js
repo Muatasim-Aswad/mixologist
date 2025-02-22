@@ -42,7 +42,7 @@ export function createStore(initialState = {}) {
       if (history.length > HISTORY_LIMIT) history.shift();
       history.push(state);
 
-      console.log("State History:", history);
+      //console.log("State History:", history);
     },
 
     // Subscribe to changes of a specific part of the state

@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/Muatasim-Aswad/mixologist#readme",
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",

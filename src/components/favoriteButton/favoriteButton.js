@@ -7,11 +7,12 @@ import { createFavoriteView } from "./favoriteView.js";
 
 export function createFavoriteButton(cocktail) {
   const isFavorite = hasFavorite(cocktail);
-
   const button = createFavoriteView(isFavorite);
 
   // Click handler
   button.addEventListener("click", () => {
+    const isFavorite = hasFavorite(cocktail);
+
     if (isFavorite) {
       removeFavorite(cocktail);
       button.classList.remove("text-red-500");
