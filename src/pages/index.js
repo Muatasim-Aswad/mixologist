@@ -1,13 +1,13 @@
-import { createCocktailPage as cocktail } from "./cocktailPage.js";
-import { createWelcomePage as welcome } from "./welcomePage.js";
-import { createErrorPage as error } from "./errorPage.js";
-import { createLoadingPage as loading } from "./loadingPage.js";
-import { createCocktailsPage as cocktails } from "./cocktailsPage.js";
+import { createMixologistPage as mixologist } from "./mixologistPage/mixologistPage.js";
+import { createCocktailsPage as cocktails } from "./cocktailsPage/cocktailsPage.js";
+import { createCocktailPage as cocktail } from "./cocktailPage/cocktailPage.js";
+import { createLoadingPage as loading } from "./loadingPage/loadingPage.js";
+import { createErrorPage as error } from "./errorPage/errorPage.js";
 
 export const pages = {
-  welcome,
-  cocktail,
-  error,
-  loading,
+  mixologist,
   cocktails,
+  cocktail,
+  loading,
+  error,
 };

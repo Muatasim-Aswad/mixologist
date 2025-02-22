@@ -1,7 +1,6 @@
 export function createIngredientView(ingredient) {
   const li = document.createElement("li");
 
-  // Tailwind classes for responsive styling
   li.classList.add(
     "flex",
     "flex-col", // Stack name & quantity by default (mobile-first)

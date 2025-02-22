@@ -1,7 +1,4 @@
-import { favorites } from "../models/favorites.js"; // favorites.getLocalStorage().length
-import { setState } from "../app.js";
-import { favoritesSelector } from "../selectors.js";
-import { subscribe } from "../app.js";
+import { favorites } from "../../models/favorites.js"; // favorites.getLocalStorage().length
 
 export function createHeaderView() {
   const header = document.createElement("div");
@@ -27,7 +24,7 @@ export function createHeaderView() {
   header.innerHTML = String.raw`
     <div class="pb-4 sm:pb-0 flex items-center gap-4">
       <!-- Logo -->
-      <h1 class="text-3xl font-bold">Mixologist</h1>
+      <h1 id="mixologist-logo" class="text-3xl font-bold cursor-pointer">Mixologist</h1>
 
       <!-- Favorites Icon -->
       <div id="favorites-icon" class="relative cursor-pointer group">
@@ -53,36 +50,6 @@ export function createHeaderView() {
       </button>
     </div>
   `;
-
-  // Update favorites icon when favorites change
-  function updateFavoritesIcon() {
-    const icon = header.querySelector("#favorites-icon svg");
-    const count = header.querySelector("#favorites-count");
-    const favCount = favoritesSelector().length;
-
-    if (favCount > 0) {
-      icon.classList.replace("text-gray-500", "text-red-500");
-      count.textContent = favCount;
-      count.classList.remove("hidden");
-    } else {
-      icon.classList.replace("text-red-500", "text-gray-500");
-      count.classList.add("hidden");
-    }
-  }
-
-  // Update favorites when clicked
-  header.querySelector("#favorites-icon").addEventListener("click", () => {
-    setState((prev) => {
-      return {
-        currentPage: "cocktails",
-        url: "/cocktails/favorites",
-        cocktails: prev.favorites,
-      };
-    });
-  });
-
-  // Subscribe to favorites updates
-  subscribe(favoritesSelector, updateFavoritesIcon);
 
   return header;
 }

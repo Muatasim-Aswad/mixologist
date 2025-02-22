@@ -1,4 +1,4 @@
-import isEqual from "./utils/isEqual.js";
+import { isEqual } from "./utils/index.js";
 const HISTORY_LIMIT = 49;
 
 export function createStore(initialState = {}) {
@@ -12,12 +12,12 @@ export function createStore(initialState = {}) {
     },
 
     setState(newState) {
-      if (isEqual(newState, state, true)) return; //3rd arg states newState can be just a subset of the state
-
       const prevState = { ...state };
       if (typeof newState === "function") {
         newState = newState(prevState);
       }
+
+      if (isEqual(newState, state, true)) return; //3rd arg states newState can be just a subset of the state
 
       state = { ...state, ...newState };
 
@@ -31,7 +31,7 @@ export function createStore(initialState = {}) {
       if (history.length > HISTORY_LIMIT) history.shift();
       history.push(state);
 
-      //console.log(history);
+      console.log("State History:", history);
     },
 
     // Subscribe to changes of a specific part of the state
@@ -54,6 +54,21 @@ export function createStore(initialState = {}) {
 function hasStateChanged(prevState, newState, selector) {
   const selectedPrevState = selector(prevState);
   const selectedNewState = selector(newState);
+
+  if (typeof selectedPrevState !== typeof selectedNewState) return true;
+
+  if (
+    (selectedPrevState === null || selectedPrevState === undefined) &&
+    (selectedNewState === null || selectedNewState === undefined)
+  )
+    return false;
+
+  if (
+    typeof selectedPrevState !== "object" ||
+    typeof selectedNewState !== "object"
+  ) {
+    return selectedPrevState !== selectedNewState;
+  }
 
   return !isEqual(selectedPrevState, selectedNewState);
 }

@@ -1,4 +1,4 @@
-export function createWelcomeView() {
+export function createMixologistView() {
   const welcome = document.createElement("div");
   welcome.classList.add(
     "welcome",
@@ -33,6 +33,13 @@ export function createWelcomeView() {
       <p class="text-gray-600">
         Click the random button above without typing anything to get a 
         <strong class="text-green-600">random cocktail</strong> recipe and surprise yourself!
+      </p>
+    </div>
+
+    <div class="mt-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-2">Favorite Cocktails:</h4>
+      <p class="text-gray-600">
+        Found a cocktail you love? Click the heart icon next to it to add it to your <strong class="text-pink-600">favorites</strong> for easy access later!
       </p>
     </div>
 

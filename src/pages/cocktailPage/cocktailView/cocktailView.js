@@ -1,4 +1,5 @@
-import { createFavoriteButton } from "../sharedViews/favoriteButton.js";
+import { createFavoriteButton } from "../../../components/favoriteButton/favoriteButton.js";
+import { createIngredientView } from "./ingredientView.js";
 
 export function createCocktailView(cocktail) {
   const cocktailElement = document.createElement("div");
@@ -55,6 +56,12 @@ export function createCocktailView(cocktail) {
   cocktailElement
     .querySelector(".favorite-button-container")
     .appendChild(favoriteButton);
+
+  // Get the ingredients list and populate it
+  const ingredientsList = cocktailElement.querySelector(".ingredients ul");
+  cocktail.ingredients.forEach((ingredient) => {
+    ingredientsList.appendChild(createIngredientView(ingredient));
+  });
 
   return cocktailElement;
 }

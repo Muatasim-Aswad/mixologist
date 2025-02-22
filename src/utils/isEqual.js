@@ -10,9 +10,9 @@
  * @returns {boolean} - Returns true if the objects are equal, false otherwise.
  */
 
-export default function isEqual(a, b, isASubsetOfB = false) {
-  // Return false if either a or b is falsy or not an object
-  if (!a || !b || typeof a !== "object" || typeof b !== "object") return false;
+export function isEqual(a, b, isASubsetOfB = false) {
+  if (!a || !b || typeof a !== "object" || typeof b !== "object")
+    throw new Error("Invalid arguments");
 
   //if a is a subset of b, then a should have less or equal keys than b, therefore we can use a as the reference
   //otherwise, we need to merge the keys of a and b
@@ -25,7 +25,12 @@ export default function isEqual(a, b, isASubsetOfB = false) {
     if (!(key in a) || !(key in b)) return false;
 
     // Check values equality for nested objects
-    if (typeof a[key] === "object" || typeof b[key] === "object") {
+    if (
+      typeof a[key] === "object" &&
+      typeof b[key] === "object" &&
+      a[key] &&
+      b[key]
+    ) {
       if (!isEqual(a[key], b[key], isASubsetOfB)) return false;
     }
 

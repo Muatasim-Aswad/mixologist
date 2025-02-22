@@ -1,6 +1,6 @@
-import { createCocktailsListView } from "../views/cocktailsListView.js/cocktailsListView.js";
-import { setState } from "../app.js";
-import { cocktailsSelector } from "../selectors.js";
+import { createCocktailsListView } from "./cocktailsListView/cocktailsListView.js";
+import { setState } from "../../app.js";
+import { cocktailsSelector } from "../../selectors.js";
 
 export function createCocktailsPage() {
   const cocktails = cocktailsSelector();
@@ -8,6 +8,7 @@ export function createCocktailsPage() {
 
   const cocktailsCards = cocktailsPage.querySelectorAll(".cocktail-card");
 
+  //move to cocktail page when a cocktail card is clicked
   cocktailsCards.forEach((card) => {
     card.addEventListener("click", () => {
       const cocktailId = card.dataset.id;

@@ -1,6 +1,6 @@
-import { createErrorView } from "../views/errorView.js";
-import { errorSelector } from "../selectors.js";
-import { setState } from "../app.js";
+import { createErrorView } from "./errorView.js";
+import { errorSelector } from "../../selectors.js";
+import { setState } from "../../app.js";
 
 export function createErrorPage() {
   const noResultMessage = `Sorry, we couldn't find any cocktails with that name. Please double-check the spelling and try again.`;

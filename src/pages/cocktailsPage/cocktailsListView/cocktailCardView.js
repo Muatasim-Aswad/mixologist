@@ -1,4 +1,4 @@
-import { createFavoriteButton } from "../sharedViews/favoriteButton.js";
+import { createFavoriteButton } from "../../../components/favoriteButton/favoriteButton.js";
 
 export function createCocktailCardView(cocktail) {
   const card = document.createElement("div");

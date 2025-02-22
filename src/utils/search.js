@@ -23,7 +23,12 @@ export async function search(searchInput, byId = false, updateUrl = true) {
 
     const cocktails = data.drinks.map(processCocktailData);
 
-    url = null;
+    const newState = {
+      cocktails: cocktails,
+      loading: false,
+      currentPage: "cocktails",
+    };
+
     if (updateUrl) {
       if (byId) {
         url = `/cocktails/${searchInput}`;
@@ -32,14 +37,8 @@ export async function search(searchInput, byId = false, updateUrl = true) {
       } else {
         url = "/cocktails/random";
       }
+      newState.url = url;
     }
-
-    const newState = {
-      cocktails: cocktails,
-      loading: false,
-      currentPage: "cocktails",
-      url,
-    };
 
     if (byId) {
       newState.cocktail = cocktails[0];

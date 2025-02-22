@@ -1,11 +1,4 @@
-import {
-  hasFavorite,
-  addFavorite,
-  removeFavorite,
-} from "../../models/favorites.js";
-
-export function createFavoriteButton(cocktail) {
-  const isFavorite = hasFavorite(cocktail);
+export const createFavoriteView = (isFavorite) => {
   const button = document.createElement("button");
   button.classList.add(
     "favorite-btn",
@@ -23,18 +16,5 @@ export function createFavoriteButton(cocktail) {
     </svg>
   `;
 
-  // Click handler
-  button.addEventListener("click", () => {
-    if (isFavorite) {
-      removeFavorite(cocktail);
-      button.classList.remove("text-red-500");
-      button.classList.add("text-gray-500");
-    } else {
-      addFavorite(cocktail);
-      button.classList.remove("text-gray-500");
-      button.classList.add("text-red-500");
-    }
-  });
-
   return button;
-}
+};

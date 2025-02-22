@@ -1,13 +1,9 @@
-import { createHeaderComponent } from "./components/header.js";
-import { pages } from "./pages/index.js";
+import { createHeaderComponent } from "./components/header/header.js";
 import { createStore } from "./store.js";
-import { navigateTo } from "./routing.js";
+import { navigateTo } from "./RoutingRendering/navigateTo.js";
 import { favorites } from "./models/favorites.js";
-import {
-  currentPageSelector,
-  urlSelector,
-  favoritesSelector,
-} from "./selectors.js";
+import { favoritesSelector } from "./selectors.js";
+import { enableRenderer, enableRouter } from "./RoutingRendering/index.js";
 
 const initialState = {
   currentPage: null,
@@ -19,14 +15,13 @@ const initialState = {
   favorites: favorites.getLocalStorage(),
 };
 export const { setState, getState, subscribe } = createStore(initialState);
-
-subscribe(currentPageSelector, renderPage); //render the page when the currentPage changes
 subscribe(favoritesSelector, () =>
   favorites.setLocalStorage(favoritesSelector()),
-);
-subscribe(urlSelector, reflectUrlState);
+); //keeps the local storage for favorites in sync with the state
 
-window.addEventListener("popstate", navigateTo);
+enableRouter();
+enableRenderer();
+
 window.addEventListener("load", loadApp);
 
 function loadApp() {
@@ -35,21 +30,4 @@ function loadApp() {
   if (window.location.pathname === "/")
     window.history.replaceState({}, "", "/mixologist  ");
   navigateTo();
-}
-
-function renderPage() {
-  const main = document.querySelector("main");
-  main.innerHTML = "";
-
-  const page = pages[getState().currentPage]();
-  main.appendChild(page);
-}
-
-function reflectUrlState() {
-  const url = urlSelector();
-  const { pathname: path, search: query, hash } = window.location;
-
-  if (url === path + query + hash) return;
-
-  window.history.pushState({}, "", url);
 }
