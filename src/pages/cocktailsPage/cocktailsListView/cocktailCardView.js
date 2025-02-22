@@ -21,7 +21,7 @@ export function createCocktailCardView(cocktail) {
   );
 
   card.innerHTML = String.raw`
-    <img src="${cocktail.image}" class="w-full h-48 object-cover rounded-lg" alt="${cocktail.name}">
+    <img src="${cocktail.image}" class="w-full h-full object-contain rounded-lg" alt="${cocktail.name}">
     <h3 class="text-lg font-semibold">${cocktail.name}</h3>
     <p class="text-gray-500 text-sm">${cocktail.glass} - ${cocktail.category}</p>
     <div class="favorite-button-container"></div> <!-- Placeholder for favorite button -->

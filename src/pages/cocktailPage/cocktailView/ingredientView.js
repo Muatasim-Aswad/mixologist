@@ -6,12 +6,12 @@ export function createIngredientView(ingredient) {
     "flex-col", // Stack name & quantity by default (mobile-first)
     "sm:flex-row", // Align side-by-side on larger screens
     "items-center",
-    "gap-2",
+    "gap-3",
     "p-3",
-    "ml-2",
-    "mb-2",
-    "bg-white",
-    "shadow-sm",
+    "mr-3",
+    "mb-3",
+    "bg-gray-50",
+    "shadow-md",
     "rounded-lg",
     "text-center", // Center text on small screens
     "sm:text-left", // Align text left on larger screens

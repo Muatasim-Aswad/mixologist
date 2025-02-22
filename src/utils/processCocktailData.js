@@ -6,7 +6,7 @@ export function processCocktailData(raw) {
     image: raw.strDrinkThumb,
     ingredients: [],
     glass: raw.strGlass,
-    instructions: raw.strInstructions.split(".").filter((i) => i), //split and remove empty strings
+    instructions: raw.strInstructions.split(".").filter((i) => i) || [], //split and remove empty strings
     category: raw.strCategory,
     alcoholic: raw.strAlcoholic,
   };

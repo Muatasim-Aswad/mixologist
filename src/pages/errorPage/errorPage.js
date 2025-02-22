@@ -1,5 +1,5 @@
 import { createErrorView } from "./errorView.js";
-import { errorSelector } from "../../selectors.js";
+import { errorSelector } from "../../State/selectors.js";
 import { setState } from "../../app.js";
 
 export function createErrorPage() {

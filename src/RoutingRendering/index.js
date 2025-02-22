@@ -1,4 +1,9 @@
-import { currentPageSelector, urlSelector } from "../selectors.js";
+import {
+  currentPageSelector,
+  urlSelector,
+  cocktailSelector,
+  cocktailsSelector,
+} from "../State/selectors.js";
 import { renderPage, renderWithoutUrl } from "./renderers.js";
 import { reflectUrlState } from "./reflectUrlState.js";
 import { navigateTo } from "./navigateTo.js";
@@ -10,6 +15,11 @@ export function enableRouter() {
 }
 
 export function enableRenderer() {
-  subscribe(urlSelector, renderPage); //render when the URL state changes
-  subscribe(currentPageSelector, renderWithoutUrl(["error", "loading"])); //render for specific current page states that aren't reflected in the URL
+  //subscribe(urlSelector, renderPage); //render when the URL state changes
+  subscribe(cocktailSelector, renderPage);
+  subscribe(cocktailsSelector, renderPage);
+  subscribe(
+    currentPageSelector,
+    renderWithoutUrl(["error", "loading", "mixologist"]),
+  ); //render for specific current page states that aren't reflected in the URL
 }

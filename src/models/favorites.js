@@ -1,4 +1,4 @@
-import { cocktailSelector, favoritesSelector } from "../selectors.js";
+import { cocktailSelector, favoritesSelector } from "../State/selectors.js";
 import { setState } from "../app.js";
 
 export const hasFavorite = (cocktail) => {

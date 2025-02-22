@@ -1,7 +1,7 @@
 import { createHeaderView } from "./headerView.js";
 import { search } from "../../utils/index.js";
 import { setState } from "../../app.js";
-import { favoritesSelector } from "../../selectors.js";
+import { favoritesSelector } from "../../State/selectors.js";
 import { subscribe } from "../../app.js";
 
 export function createHeaderComponent() {

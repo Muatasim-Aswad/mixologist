@@ -1,6 +1,6 @@
 import { setState } from "../app.js";
 import { search } from "../utils/index.js";
-import { urlSelector } from "../selectors.js";
+import { urlSelector } from "../State/selectors.js";
 
 /**
  * This function is responsible for navigating to the correct page based on the URL.

@@ -1,3 +1,4 @@
+import { AppError } from "./appError.js";
 /**
  * Compares two objects using keys and values.
  * Operates in two modes:
@@ -11,8 +12,9 @@
  */
 
 export function isEqual(a, b, isASubsetOfB = false) {
-  if (!a || !b || typeof a !== "object" || typeof b !== "object")
-    throw new Error("Invalid arguments");
+  if (!a || !b || typeof a !== "object" || typeof b !== "object") {
+    throw new AppError("Invalid arguments in isEqual");
+  }
 
   //if a is a subset of b, then a should have less or equal keys than b, therefore we can use a as the reference
   //otherwise, we need to merge the keys of a and b

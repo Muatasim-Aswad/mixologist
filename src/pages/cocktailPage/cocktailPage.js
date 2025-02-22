@@ -1,5 +1,5 @@
 import { createCocktailView } from "./cocktailView/cocktailView.js";
-import { cocktailSelector } from "../../selectors.js";
+import { cocktailSelector } from "../../State/selectors.js";
 
 export function createCocktailPage() {
   const cocktail = cocktailSelector();

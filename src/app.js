@@ -1,9 +1,10 @@
 import { createHeaderComponent } from "./components/header/header.js";
-import { createStore } from "./store.js";
+import { createStore } from "./State/store.js";
 import { navigateTo } from "./RoutingRendering/navigateTo.js";
 import { favorites } from "./models/favorites.js";
-import { favoritesSelector } from "./selectors.js";
+import { favoritesSelector } from "./State/selectors.js";
 import { enableRenderer, enableRouter } from "./RoutingRendering/index.js";
+import { sanitizeData } from "./State/middlewares.js";
 
 const initialState = {
   currentPage: null,
@@ -14,7 +15,10 @@ const initialState = {
   cocktails: null,
   favorites: favorites.getLocalStorage(),
 };
-export const { setState, getState, subscribe } = createStore(initialState);
+export const { setState, getState, subscribe, addMiddleware } =
+  createStore(initialState);
+
+addMiddleware(sanitizeData);
 subscribe(favoritesSelector, () =>
   favorites.setLocalStorage(favoritesSelector()),
 ); //keeps the local storage for favorites in sync with the state

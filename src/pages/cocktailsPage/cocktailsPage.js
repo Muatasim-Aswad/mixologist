@@ -1,6 +1,6 @@
 import { createCocktailsListView } from "./cocktailsListView/cocktailsListView.js";
 import { setState } from "../../app.js";
-import { cocktailsSelector } from "../../selectors.js";
+import { cocktailsSelector } from "../../State/selectors.js";
 
 export function createCocktailsPage() {
   const cocktails = cocktailsSelector();
