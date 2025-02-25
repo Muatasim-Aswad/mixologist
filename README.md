@@ -14,6 +14,19 @@ Mixologist is a web application that allows users to search for cocktail recipes
 
 📌 **GitHub Repo**: [Mixologist GitHub](https://github.com/Muatasim-Aswad/)
 
+---
+
+* [Mixologist](#mixologist)
+   * [Cocktail Recipe Finder Web App](#cocktail-recipe-finder-web-app)
+   * [🚀 Features](#-features)
+   * [🛠 Technology &amp; Architecture](#-technology--architecture)
+   * [🚀 API Used](#-api-used)
+   * [🔧 Installation &amp; Setup](#-installation--setup)
+   * [🌟 Future Enhancements](#-future-enhancements)
+   * [📷 Screenshots](#-screenshots)
+
+---
+
 ## 🚀 Features
 
 - **Search by cocktail name:** Users can enter the name of a specific cocktail, and the app will display recipes that match the search. The search is flexible and supports partial matches.
@@ -24,8 +37,9 @@ Mixologist is a web application that allows users to search for cocktail recipes
 ## 🛠 Technology & Architecture
 
 - **Single Page Application (SPA):** The app is built as a SPA with seamless navigation and fast performance.
-- **Folder Structure:** The app follows a modular folder structure where pages and shared components are separated. For each component or page, the logic is kept distinct from the view (HTML/CSS), ensuring maintainability and scalability.
 - **Routing & State Management:** Implements custom routing and state management without relying on third-party libraries.
+- **Folder Structure:** The app follows a modular folder structure where pages and shared components are separated. For each component or page, the logic is kept distinct from the view (HTML/CSS), ensuring maintainability and scalability.
+
 - **HTML, CSS (TailwindCSS), JavaScript:** Used to build a responsive and interactive user interface.
 - **Vite:** Utilized for fast builds and efficient development.
 - **Netlify:** Deployment and hosting platform.
@@ -59,6 +73,9 @@ npm run dev
 - **Search autocomplete:** Suggest cocktail names as users type for better user experience.
 
 ## 📷 Screenshots
+
+<img width="917" alt="Screenshot 2025-02-25 at 07 48 35" src="https://github.com/user-attachments/assets/35efb661-7380-466f-9b44-7e107a3d3021" />
+<img width="911" alt="Screenshot 2025-02-25 at 07 49 55" src="https://github.com/user-attachments/assets/aa501506-37bb-4925-8958-293b95d58d78" />
 
 ---
 
