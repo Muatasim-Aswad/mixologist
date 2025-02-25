@@ -16,8 +16,7 @@ Mixologist is a web application that allows users to search for cocktail recipes
 
 ---
 
-* [Mixologist](#mixologist)
-   * [Cocktail Recipe Finder Web App](#cocktail-recipe-finder-web-app)
+* [Mixologist](#cocktail-recipe-finder-web-app)
    * [🚀 Features](#-features)
    * [🛠 Technology &amp; Architecture](#-technology--architecture)
    * [🚀 API Used](#-api-used)
